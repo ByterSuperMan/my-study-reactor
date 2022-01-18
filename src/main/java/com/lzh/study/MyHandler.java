@@ -12,8 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 为了实现全双工通信，因此需要有两个缓冲区。
- * 一般来说，习惯上以 \r\n 作为一个消息的结束。
+ * 为了实现全双工通信，需要有两个缓冲区
  */
 public class MyHandler implements Runnable {
 
@@ -37,7 +36,9 @@ public class MyHandler implements Runnable {
      * 写出缓冲区
      */
     private ByteBuffer outBuf;
-
+    /**
+     * 初始状态为读入IO数据
+     */
     private int state = READING;
 
     public MyHandler(SocketChannel socketChannel, Selector selector, IMyReader myReader) throws ClosedChannelException {

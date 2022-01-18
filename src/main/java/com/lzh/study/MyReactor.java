@@ -46,9 +46,10 @@ public class MyReactor implements Runnable {
         this.serverSK.interestOps(SelectionKey.OP_ACCEPT);
     }
 
-
+    /**
+     *
+     */
     protected class MyAcceptor implements Runnable {
-
         @Override
         public void run() {
             //新连接
@@ -59,7 +60,6 @@ public class MyReactor implements Runnable {
                     //对新连接的读入事件感兴趣，并为其分配专属数据缓冲区
                     //实质上，clientSK是指该新连接的通道与选择器的关联关系
                     new MyHandler(socketChannel, MyReactor.this.selector, MyReactor.this.myReaderFactory.create());
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,7 +76,7 @@ public class MyReactor implements Runnable {
         SelectionKey readySK;
         while (Thread.currentThread().isAlive()) {
             try {
-                select = this.selector.select();
+                select = this.selector.select(500);
                 if (select > 0) {
                     //有就绪通道，处理
                     selectionKeys = this.selector.selectedKeys();
